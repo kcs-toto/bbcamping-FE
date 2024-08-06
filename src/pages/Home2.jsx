@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "../styles/pages/Home.css";
 import Star from "../assets/icons/star.png";
 import Camping from "../assets/icons/camping.png";
 import Map from "../components/Map.jsx";
 
-function Home2() {
+function Home() {
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
   const [selectedCampingId, setSelectedCampingId] = useState(null);
   const [campingData, setCampingData] = useState(null);
   const [error, setError] = useState(null);
   const [amenities, setAmenities] = useState([]);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { region, date } =
+    location.state || { region: "", date: { month: null, day: null } };
 
   const handleMapClick = () => {
     setIsInfoModalOpen(true);
@@ -28,13 +33,21 @@ function Home2() {
     }
   };
 
-  const location = useLocation();
-  const { region, date } =
-    location.state || { region: "", date: { month: null, day: null } };
+  // star-container 클릭 시 호출될 함수
+  const handleStarContainerClick = () => {
+    navigate("/star", {
+      state: {
+        date: {
+          month: date.month,
+          day: date.day,
+        },
+      },
+    });
+  };
 
   // 콜백 함수: campId 수신 시 로그 출력
   const handleCampingSelect = (campId) => {
-    console.log("Selected campId in Home2:", campId);
+    console.log("Selected campId in Home:", campId);
     setSelectedCampingId(campId);
     setIsInfoModalOpen(true); // 캠핑 선택 시 모달 열기
   };
@@ -87,16 +100,17 @@ function Home2() {
             },
           }}
           className="star-button"
-        ></Link>
+        >
+          {/* Star button */}
+        </Link>
       </div>
       <div className="map-placeholder" onClick={handleMapClick}>
         <Map onCampingSelect={handleCampingSelect} />
       </div>
-      <div className="star-container">
+      <div className="star-container" onClick={handleStarContainerClick}>
         <img src={Star} alt="Star icon" className="star-image" />
         <div>오늘 별자리</div>
       </div>
-
       <div className="info-modal">
         <img src={Camping} alt="Camping icon" className="camping-image" />
         <p className="info-message">
@@ -167,4 +181,4 @@ function Home2() {
   );
 }
 
-export default Home2;
+export default Home;
