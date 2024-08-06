@@ -1,28 +1,34 @@
 // src/pages/Option.js
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { RegionBtn, SubmitBtn } from "../components/Button";
 import "../styles/pages/Option.css";
 import DateSelector from '../components/DateSelector';
 import { useNavigate } from 'react-router-dom';
 
 function Option() {
-    // state로 선택된 지역과 날짜를 저장
+    // State to store selected region and date
     const [selectedRegion, setSelectedRegion] = useState('');
     const [selectedDate, setSelectedDate] = useState({ month: null, day: null });
-    const nav = useNavigate()
+    const [fadeIn, setFadeIn] = useState(false); // State for fade-in effect
+    const nav = useNavigate();
 
-    // 지역 버튼 클릭 핸들러
+    useEffect(() => {
+        // Trigger fade-in effect when component mounts
+        setFadeIn(true);
+    }, []);
+
+    // Region button click handler
     const handleRegionClick = (region) => {
-        setSelectedRegion(region); // 클릭된 지역으로 상태 업데이트
+        setSelectedRegion(region); // Update state with clicked region
     };
 
-    // 날짜 선택 핸들러
+    // Date selection handler
     const handleDateSelect = (month, day) => {
         setSelectedDate({ month, day });
     };
 
-    // submit 버튼 클릭 핸들러
+    // Submit button click handler
     const handleSubmit = () => {
         if (selectedRegion && selectedDate.month && selectedDate.day) {
             nav('/home', {
@@ -34,11 +40,11 @@ function Option() {
         }
     };
 
-    // 모든 조건을 충족할 때만 버튼 활성화
+    // Enable the submit button only if all conditions are met
     const isSubmitEnabled = selectedRegion !== '' && selectedDate.month !== null && selectedDate.day !== null;
 
     return (
-        <div className="Option">
+        <div className={`Option ${fadeIn ? 'fade-in' : ''}`}>
             <div className="title">별을 찾아서 캠핑을 떠나요.</div>
             <div className="region-section">
                 <div className="section-title">지역</div>
@@ -48,7 +54,7 @@ function Option() {
                     <RegionBtn name="모두" onClick={() => handleRegionClick('all')} active={selectedRegion === 'all'} />
                 </div>
             </div>
-            <div className="date-section">
+            <div className="datee-section">
                 <div className="section-title">날짜</div>
                 <div className='selector-wrapper'>
                     <DateSelector onDateSelect={handleDateSelect} />

@@ -9,6 +9,5 @@
 .content {
     width: 500px;
     height: 100vh;
-    background-color: #2F3267;
-    box-shadow: -1px 0 1px rgba(0, 0, 0, 0.4), 1px 0 1px rgba(0, 0, 0, 0.4);
+    background-color: #fff;
 }

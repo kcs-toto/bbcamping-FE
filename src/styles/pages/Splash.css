@@ -21,18 +21,18 @@
 }
 
 .title-1 {
-    top: 70px; /* 상대적 위치 조정 */
+    top: 180px; /* 상대적 위치 조정 */
     left: 105px; /* 백분율로 변경 */
 }
 
 .title-2 {
-    top: 100px; /* 상대적 위치 조정 */
+    top: 210px; /* 상대적 위치 조정 */
     left: 255px; /* 백분율로 변경 */
 }
 
 .star {
     position: absolute;
-    top: 10%; /* 백분율로 변경 */
+    top: 170px; /* 백분율로 변경 */
     left: 49%; /* 백분율로 변경 */
 }
 
@@ -62,7 +62,7 @@
     top: 300px;
     left: 17%;
     transform: translateX(-50%);
-    animation: fadeInUp 1s ease-out forwards; /* 1초 동안 실행 */
+    animation: fadeInUp 2s ease-out forwards; /* 1초 동안 실행 */
 }
 
 .tent img {
@@ -88,7 +88,7 @@
 }
 
 .Splash * {
-    transition: all 0.5s ease; /* 모든 자식 요소에 부드러운 전환 적용 */
+    transition: all 2s ease; /* 모든 자식 요소에 부드러운 전환 적용 */
 }
 
 .star img {
