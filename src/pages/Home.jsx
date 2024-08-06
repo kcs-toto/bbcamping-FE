@@ -3,6 +3,8 @@ import { Link, useLocation } from 'react-router-dom';
 import '../styles/pages/Home.css';
 import Star from '../assets/icons/star.png';
 import Camping from '../assets/icons/camping.png';
+import Search from '../assets/icons/search.png';
+import Map from '../components/Map.jsx';
 
 function Home() {
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
@@ -47,7 +49,7 @@ function Home() {
         </Link>
       </div>
       <div className="map-placeholder" onClick={handleMapClick}>
-        {/* 이 부분에 지도가 들어갈 예정입니다 */}
+        <Map/>
         <img src="/path/to/placeholder-image.png" alt="Map placeholder" />
       </div>
       <form className="form">
