@@ -3,7 +3,7 @@ import axios from "axios";
 import starMarker from "../assets/icons/starMarker.png";
 import tentMarker from "../assets/icons/tentMarker.png";
 
-const Map = () => {
+const Map = ({ onCampingSelect }) => {
   const [locations, setLocations] = useState([]);
   const [starLoca, setStarLoca] = useState([]);
 
@@ -11,7 +11,7 @@ const Map = () => {
     const fetchCampingData = async () => {
       try {
         const response = await axios.get("http://localhost:8080/api/camping/info");
-          setLocations(response.data.data);
+        setLocations(response.data.data);
       } catch (error) {
         console.error("Error fetching camping data: ", error);
       }
@@ -48,7 +48,7 @@ const Map = () => {
         const infowindow = new window.kakao.maps.InfoWindow({ zIndex: 1 });
         const bounds = new window.kakao.maps.LatLngBounds();
 
-        // Camping markers (log ID to console)
+        // Camping markers
         locations.forEach((place) => {
           const position = new window.kakao.maps.LatLng(place.latitude, place.longitude);
 
@@ -65,13 +65,14 @@ const Map = () => {
           });
 
           window.kakao.maps.event.addListener(marker, "click", () => {
-            console.log("Camping location ID:", place.campId); // Log camping marker ID
+            console.log("Clicked campId in Map:", place.campId);
+            onCampingSelect(place.campId); // Call the parent function with the campId
           });
 
           bounds.extend(position);
         });
 
-        // Landmark markers (log ID to console)
+        // Landmark markers
         starLoca.forEach((place) => {
           const position = new window.kakao.maps.LatLng(place.latitude, place.longitude);
 
@@ -87,20 +88,20 @@ const Map = () => {
             image: markerImage
           });
 
-          window.kakao.maps.event.addListener(marker, "click", () => {
-            console.log("Landmark location ID:", place.id); // Log landmark marker ID
-            infowindow.close();
-            infowindow.setContent(`
-              <div class="wrap" style="width: 10px; height: 8px; font-size: 13px; color: gray; white-space: nowrap">
-                <div class="infowindow-content">
-                  <div class="titless">
-                    ${place.title}
-                  </div>
-                </div>
-              </div>
-            `);
-            infowindow.open(map, marker);
-          });
+        //   window.kakao.maps.event.addListener(marker, "click", () => {
+        //     console.log("Landmark location ID:", place.id);
+        //     infowindow.close();
+        //     infowindow.setContent(`
+        //       <div class="wrap" style="width: 10px; height: 8px; font-size: 13px; color: gray; white-space: nowrap">
+        //         <div class="infowindow-content">
+        //           <div class="titless">
+        //             ${place.title}
+        //           </div>
+        //         </div>
+        //       </div>
+        //     `);
+        //     infowindow.open(map, marker);
+        //   });
 
           bounds.extend(position);
         });
@@ -116,7 +117,7 @@ const Map = () => {
     };
 
     return () => script.remove();
-  }, [locations, starLoca]);
+  }, [locations, starLoca, onCampingSelect]);
 
   return <div id="map" style={{ width: '100%', height: '300px', position: 'absolute', borderRadius: '10px' }} />;
 };
