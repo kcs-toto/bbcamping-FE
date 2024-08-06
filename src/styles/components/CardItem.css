@@ -60,7 +60,8 @@
     background-size: cover; /* Ensure the background image covers the area */
     background-position: center; /* Center the background image */
     transform: rotateY(0deg); /* Default state for the front face */
-    background-color: white;
+    /* background: linear-gradient(to bottom, #2f3267, #fff); */
+    background: #ebf2f5;
 }
 
 .img-section{

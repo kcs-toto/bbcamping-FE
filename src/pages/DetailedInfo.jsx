@@ -1,29 +1,39 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import axios from 'axios';
 import '../styles/pages/DetailedInfo.css';
-import campingImage from "../assets/images/camping-test.png";
+import defaultImage from "../assets/images/camping.png";
 
 function DetailedInfo() {
-  console.log("Rendered DetailedInfo");
-
   const { id } = useParams();
-  console.log("id:", id);
+  const [campingData, setCampingData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  if (id !== "1") {
-    return <div>잘못된 접근입니다.</div>;
+  useEffect(() => {
+    const fetchCampingData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8080/api/camping/info/${id}`);
+        setCampingData(response.data.data);
+        // console.log(response.data);
+        // alert(response.data.data.info);
+      } catch (err) {
+        setError(err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchCampingData();
+  }, [id]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
   }
 
-  const data = {
-    "1": {
-      name: "(주)아웃오브파크",
-      address: "강원도 춘천시 남면 가옹개길 52-9",
-      image: campingImage,
-      description: "아웃오브파크는 강원도 춘천시 남면에 자리했다. 서울양양고속도로 강촌IC에서 엘리시안강촌 방면으로 30분가량 달리면 도착한다.",
-      tags: ["수영장", "노래방", "찜질방", "카페", "중앙무대", "분수"]
-    }
-  };
-
-  const campingData = data[id];
+  if (error) {
+    return <div>Something went wrong: {error.message}</div>;
+  }
 
   if (!campingData) {
     return <div>잘못된 접근입니다.</div>;
@@ -32,17 +42,19 @@ function DetailedInfo() {
   return (
     <div className="detailed-info">
       <Link to="/Home" className="close-button">×</Link> {/* X 버튼 */}
-      <h1>{campingData.name}</h1>
-      <p>{campingData.address}</p>
-      <img src={campingData.image} alt={campingData.name} />
-      <p>{campingData.description}</p>
-      <div>
-        {campingData.tags.map((tag, index) => (
-          <span key={index}>#{tag} </span>
+      <h1>{campingData.campingName}</h1>
+      <p>{campingData.addr1}</p>
+      <img src={campingData.image || defaultImage} alt={campingData.campingName} />
+      <p>{campingData.info}</p>
+      {/* <div>
+        {campingData.amenities.split(',').map((tag, index) => (
+          <span key={index}>#{tag.trim()} </span>
         ))}
       </div>
+      <div>{campingData.addr1}</div> */}
     </div>
   );
 }
 
 export default DetailedInfo;
+
