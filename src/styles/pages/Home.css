@@ -91,6 +91,7 @@
     box-sizing: border-box;
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
+    animation: slide-up 0.5s ease-out forwards;
   }
   
   .star-container {
@@ -121,11 +122,38 @@
     font-size: 20px;
   }
   
-/* Home.css */
-.data-modal {
+/* 애니메이션 정의 */
+@keyframes slide-up {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  /* 모달 닫기 애니메이션 */
+@keyframes slide-down {
+    from {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+  }
+  
+  .data-modal.closing {
+    animation: slide-down 0.5s ease-out forwards; /* 애니메이션 적용 */
+  }
+  
+  /* 데이터 모달 스타일 */
+  .data-modal {
     position: fixed;
     bottom: 0;
-    left: 50%;
     transform: translateX(-50%);
     width: calc(100% - 40px);
     max-width: 500px;
@@ -137,11 +165,15 @@
     box-sizing: border-box;
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
+    animation: slide-up 0.5s ease-out forwards;
   }
+
   
+  
+  /* 기타 스타일은 기존과 동일 */
   .modal-header {
     display: flex;
-    justify-content: center; /* 가운데 정렬 */
+    justify-content: center;
     align-items: center;
     border-bottom: 1px solid #bdc3c7;
     padding-bottom: 10px;
@@ -165,7 +197,7 @@
   
   .modal-body {
     padding: 10px 0;
-    text-align: center; /* 텍스트 가운데 정렬 */
+    text-align: center;
   }
   
   .modal-body p {
@@ -176,7 +208,7 @@
   
   .tags {
     display: flex;
-    justify-content: center; /* 태그들 가운데 정렬 */
+    justify-content: center;
     gap: 10px;
     flex-wrap: wrap;
     margin-top: 10px;
@@ -205,9 +237,91 @@
     cursor: pointer;
     font-size: 16px;
     text-align: center;
+    text-decoration: none;
   }
   
   .details-button:hover {
     background-color: #2F3267;
     color: white;
+  }
+  
+
+.form button {
+    border: none;
+    background: none;
+    color: #8b8ba7;
+  }
+  /* styling of whole input container */
+  .form {
+    --timing: 0.3s;
+    --width-of-input: 500px;
+    --height-of-input: 40px;
+    --border-height: 2px;
+    --input-bg: #fff;
+    --border-color: yellow;
+    --border-radius: 30px;
+    --after-border-radius: 1px;
+    position: relative;
+    width: var(--width-of-input);
+    height: var(--height-of-input);
+    display: flex;
+    align-items: center;
+    padding-inline: 0.8em;
+    border-radius: var(--border-radius);
+    transition: border-radius 0.5s ease;
+    background: var(--input-bg,#fff);
+  }
+  /* styling of Input */
+  .input {
+    font-size: 0.9rem;
+    background-color: transparent;
+    width: 100%;
+    height: 100%;
+    padding-inline: 0.5em;
+    padding-block: 0.7em;
+    border: none;
+  }
+  /* styling of animated border */
+  .form:before {
+    content: "";
+    position: absolute;
+    background: var(--border-color);
+    transform: scaleX(0);
+    transform-origin: center;
+    width: 100%;
+    height: var(--border-height);
+    left: 0;
+    bottom: 0;
+    border-radius: 1px;
+    transition: transform var(--timing) ease;
+  }
+  /* Hover on Input */
+  .form:focus-within {
+    border-radius: var(--after-border-radius);
+  }
+  
+  input:focus {
+    outline: none;
+  }
+  /* here is code of animated border */
+  .form:focus-within:before {
+    transform: scale(1);
+  }
+  /* styling of close button */
+  /* == you can click the close button to remove text == */
+  .reset {
+    border: none;
+    background: none;
+    opacity: 0;
+    visibility: hidden;
+  }
+  /* close button shown when typing */
+  input:not(:placeholder-shown) ~ .reset {
+    opacity: 1;
+    visibility: visible;
+  }
+  /* sizing svg icons */
+  .form svg {
+    width: 17px;
+    margin-top: 3px;
   }

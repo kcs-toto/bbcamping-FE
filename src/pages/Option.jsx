@@ -25,7 +25,12 @@ function Option() {
     // submit 버튼 클릭 핸들러
     const handleSubmit = () => {
         if (selectedRegion && selectedDate.month && selectedDate.day) {
-            nav('/home');
+            nav('/home', {
+                state: {
+                    region: selectedRegion,
+                    date: selectedDate,
+                }
+            });
         }
     };
 

@@ -1,0 +1,90 @@
+.card{
+    display: flex;
+    width: 220px;
+    height: 280px;
+    /* background-color: #fff; */
+    border-radius: 15px;
+    padding: 20px 10px;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    perspective: 1000px; /* Provide a 3D perspective for the card */
+    position: relative; /* Ensure position is relative for child elements */
+}
+
+
+.star-title{
+    font-size: 28px;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.date-section{
+    font-size: 15px;
+    color: #575757;
+    text-align: center;
+}
+
+.content-section{
+    font-size: 13px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+}
+
+
+.front,
+.back {
+    position: absolute; /* Overlay front and back */
+    width: 100%; /* Cover the entire card area */
+    height: 100%;
+    backface-visibility: hidden; /* Hide back face when flipped */
+    border-radius: 10px; /* Optional: rounded corners */
+    transition: transform 0.6s ease; /* Smooth flip transition */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), /* Shadow for depth */
+                0 -4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.front {
+    background-size: cover; /* Ensure the background image covers the area */
+    background-position: center; /* Center the background image */
+    transform: rotateY(0deg); /* Default state for the front face */
+    background-color: white;
+}
+
+.img-section{
+    height: 70%;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.img-section >img{
+    width: 60%;
+}
+
+.back {
+    background: white; /* Background color for the back */
+    transform: rotateY(180deg); /* Default state for the back face */
+    padding: 20px; /* Add padding for content spacing */
+}
+
+.card:hover .front {
+    transform: rotateY(180deg); /* Flip front face on hover */
+}
+
+.card:hover .back {
+    transform: rotateY(360deg); /* Show back face on hover */
+}
