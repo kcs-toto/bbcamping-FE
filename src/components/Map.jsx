@@ -10,7 +10,7 @@ const Map = ({ onCampingSelect }) => {
   useEffect(() => {
     const fetchCampingData = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/camping/info");
+        const response = await axios.get("http://ec2-52-79-177-10.ap-northeast-2.compute.amazonaws.com/api/camping/info");
         setLocations(response.data.data);
       } catch (error) {
         console.error("Error fetching camping data: ", error);
@@ -19,7 +19,7 @@ const Map = ({ onCampingSelect }) => {
 
     const fetchLandmarkData = async () => {
       try {
-        const response = await axios.get("http://localhost:8080/api/landmark/info");
+        const response = await axios.get("http://ec2-52-79-177-10.ap-northeast-2.compute.amazonaws.com/api/landmark/info");
         setStarLoca(response.data.data);
       } catch (error) {
         console.error("Error fetching landmark data: ", error);

@@ -13,7 +13,7 @@ function DetailedInfo() {
   useEffect(() => {
     const fetchCampingData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/camping/info/${id}`);
+        const response = await axios.get(`http://ec2-52-79-177-10.ap-northeast-2.compute.amazonaws.com/api/camping/info/${id}`);
         setCampingData(response.data.data);
         // console.log(response.data);
         // alert(response.data.data.info);

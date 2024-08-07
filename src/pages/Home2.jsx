@@ -58,7 +58,7 @@ function Home() {
         setError(null); // 기존 에러 초기화
         try {
           const response = await axios.get(
-            `http://localhost:8080/api/camping/info/${selectedCampingId}`
+            `http://ec2-52-79-177-10.ap-northeast-2.compute.amazonaws.com/api/camping/info/${selectedCampingId}`
           );
           setCampingData(response.data.data);
         } catch (err) {
